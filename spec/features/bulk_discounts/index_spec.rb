@@ -30,6 +30,9 @@ RSpec.describe 'merchant bulk discounts index page' do
       @invoice8.transactions.create!(result: 0)
 
       @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
+      @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
+      @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+
 
 
 
@@ -46,7 +49,12 @@ RSpec.describe 'merchant bulk discounts index page' do
     it 'i see all of my bulk discounts including percentage and quantity thresholds, each link goes to discount show page' do 
       visit "/merchants/#{@merchant1.id}/dashboard"
       click_link "My Discounts"
-
+      expect(page).to have_content("Percentage Discount: 20%")
+      expect(page).to have_content("Merchant must purchase at least 10 items to use discount.")
+      expect(page).to have_content("Percentage Discount: 10%")
+      expect(page).to have_content("Merchant must purchase at least 5 items to use discount.")
+      expect(page).to_not have_content("Percentage Discount: 15%")
+      expect(page).to_not have_content("Merchant must purchase at least 15 items to use discount.")
     end
   end
 
