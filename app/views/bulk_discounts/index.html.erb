@@ -1,0 +1,5 @@
+<h1><center>Bulk Discounts for: <%=@merchant.name%></center></h1>
+<%@merchant.bulk_discounts.each do |bulk|%>
+  <ul><h3>Percentage Discount: <%= bulk.discount%>%</h3></ul>
+  <ul>Merchant must purchase at least <%= bulk.quantity_threshold%> items to use discount.</ul>
+<%end%>
