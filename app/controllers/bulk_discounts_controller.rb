@@ -22,6 +22,18 @@ class BulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discounts_path(@merchant)
   end
 
+  def show 
+    # @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = BulkDiscount.find(params[:id])
+    # if params[:merchant_id]
+    #   @merchant.bulk_discounts
+    # end
+   
+    # @bulk_discount = @merchant.bulk_discounts.find(params[:id])
+   
+    # @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
   private 
   def bulk_discount_params
     params.permit(:discount, :quantity_threshold)
