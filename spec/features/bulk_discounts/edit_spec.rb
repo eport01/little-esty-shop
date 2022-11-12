@@ -34,15 +34,22 @@ RSpec.describe 'merchant bulk discount edit page' do
     it 'merchant is taken to an edit page where the attributes are prepopulated' do 
       visit merchant_bulk_discount_path(@merchant1, @discount2)
       click_button "Edit Discount"
-      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount2))
+      expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount2))
     end
 
     it 'when i cahnge any/all of the info and submit, i am redirected to discounts show page and attributes have been updated' do 
-      visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount2)
+      visit edit_merchant_bulk_discount_path(@merchant1, @discount2)
       expect(page).to have_content("Edit Discount Page")
 
-      expect(page).to have_field('Bulk Discount Percentage', with:"#{@bulk_discount2.discount}")
-      expect(page).to have_field('Quantity Threshold', with:"#{@bulk_discount2.quantity_threshold}")
+      expect(page).to have_field('Bulk Discount Percentage', with:"#{@discount2.discount}")
+      expect(page).to have_field('Quantity Threshold', with:"#{@discount2.quantity_threshold}")
+      fill_in('Bulk Discount Percentage', with: 20)
+
+      click_button "Submit"
+      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount2))
+      expect(page).to have_content('Discount: 20')
+      expect(page).to have_content('Quantity Threshold: 5 items to use discount.' )
+
     end
   end
 
