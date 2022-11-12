@@ -45,17 +45,13 @@ RSpec.describe 'merchant bulk discount show page' do
     
     end
 
-    it 'i can click a button to edit a discount and am taken to a form where the discounts attributes pre populated' do 
+    it 'i can click a button to edit a discount and am taken to an edit form' do 
       visit merchant_bulk_discount_path(@merchant1, @discount2)
       click_button "Edit Discount"
       expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount2))
       expect(page).to have_field('Bulk Discount Percentage', with:"#{@discount2.discount}")
       expect(page).to have_field('Quantity Threshold', with:"#{@discount2.quantity_threshold}")
-
     end
-
-
-
   end
 
 end
