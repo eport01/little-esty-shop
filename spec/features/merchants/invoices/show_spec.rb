@@ -101,5 +101,11 @@ RSpec.describe "Merchant Invoice Show" do
         end 
       end
     end
+
+    describe 'total revenue and discounted revenue' do 
+      it 'i see total revenue and discounted revenue as separate' do 
+        
+      end
+    end
   end
 end
