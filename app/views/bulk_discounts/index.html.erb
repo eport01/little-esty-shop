@@ -1,4 +1,7 @@
-<h1><center>Bulk Discounts for: <%=@merchant.name%></center></h1>
+<h2><center>Bulk Discounts for <%=@merchant.name%></center></h2>
+<hr>
+<%= button_to 'Create a New Discount', new_merchant_bulk_discount_path(@merchant), method: :get %>
+<br><br><br>
 <%@merchant.bulk_discounts.each do |bulk|%>
   <div id = "discount-list-<%=bulk.id%>">
   <ul><h3>Percentage Discount: <%= bulk.discount%>%</h3></ul>
@@ -8,5 +11,3 @@
 <%end%>
 
 
-
-<%= button_to 'Create a New Discount', new_merchant_bulk_discount_path(@merchant), method: :get %>

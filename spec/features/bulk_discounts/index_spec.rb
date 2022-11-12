@@ -68,6 +68,7 @@ RSpec.describe 'merchant bulk discounts index page' do
       expect(page).to have_content("Merchant must purchase at least 50 items to use discount.")
       expect(page).to_not have_content("Percentage Discount: 15%")
       expect(page).to_not have_content("Merchant must purchase at least 15 items to use discount.")
+      save_and_open_page
     end
 
     it 'i can delete a discount and it takes me back to index page and discount is deleted' do 
