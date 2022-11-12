@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant bulk discount show page' do 
+RSpec.describe 'merchant bulk discount edit page' do 
   before :each do 
     @merchant1 = Merchant.create!(name: 'Lisa Frank Knockoffs')
     @merchant2 = Merchant.create!(name: 'Fun Testing')
@@ -30,28 +30,28 @@ RSpec.describe 'merchant bulk discount show page' do
     @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
   end 
 
-  describe 'when i visit bulk discount show page' do 
-    it 'shows discounts quanitity threshold and percentage discount' do 
-      visit merchant_bulk_discount_path(@merchant1, @discount1)
-      expect(page).to have_content("Percentage Discount: #{@discount1.discount}")
-      expect(page).to have_content("Quantity Threshold: #{@discount1.quantity_threshold}")
-      expect(page).to_not have_content("Percentage Discount: #{@discount2.discount}")
-      
-      visit merchant_bulk_discount_path(@merchant1, @discount2)
-      expect(page).to have_content("Percentage Discount: #{@discount2.discount}")
-      expect(page).to have_content("Quantity Threshold: #{@discount2.quantity_threshold}")
-      expect(page).to_not have_content("Percentage Discount: #{@discount1.discount}")
-      
-    
-    end
-
-    it 'i can click a button to edit a discount and am taken to an edit form' do 
+  describe 'when a merchant clicks on edit discount button on merchant discount show page' do 
+    it 'merchant is taken to an edit page where the attributes are prepopulated' do 
       visit merchant_bulk_discount_path(@merchant1, @discount2)
       click_button "Edit Discount"
       expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount2))
+    end
+
+    it 'when i cahnge any/all of the info and submit, i am redirected to discounts show page and attributes have been updated' do 
+      visit edit_merchant_bulk_discount_path(@merchant1, @discount2)
+      expect(page).to have_content("Edit Discount Page")
+
       expect(page).to have_field('Bulk Discount Percentage', with:"#{@discount2.discount}")
       expect(page).to have_field('Quantity Threshold', with:"#{@discount2.quantity_threshold}")
+      fill_in('Bulk Discount Percentage', with: 20)
+
+      click_button "Submit"
+      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount2))
+      expect(page).to have_content('Discount: 20')
+      expect(page).to have_content('Quantity Threshold: 5 items to use discount.' )
+      expect(page).to have_button("Edit Discount")
+
     end
   end
 
-end
+end 
