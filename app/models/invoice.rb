@@ -14,15 +14,14 @@ class Invoice < ApplicationRecord
 
  
 
-  def discount_revenue 
+  def discount_revenue #returns invoice item
     #tables: invoice_items, bulk_discounts 
-    #@merchant2.items.first.invoice_items.first.bulk_discounts
-    #sum("invoice_items.quantity * invoice_items.unit_price") for invoice_items that have a bulk discount
-    #if invoice_item.quantity >= bulk_discount.quantity_threshold
-    #invoice_items.sum("quantity * unit_price") 
-    # @invoice2.invoice_items.first.discount_invoice_items
+
     # invoice_items.select("invoice_items.*, sum(invoice_items.quantity* invoice_items.unit_price) as discount_revenue").where("invoice_item.quantity >= bulk_discount.quantity_threshold").group(:id)
-    invoice_items.select("invoice_items.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue").joins(:bulk_discounts, :discount_invoice_items).where("invoice_items.quantity >= bulk_discounts.quantity_threshold").group(:id).sum('revenue * (1- (bulk_discounts.discount/100)')
+    # invoice_items.select("invoice_items.*, sum(invoice_items.quantity * invoice_items.unit_price * (1 - bulk_discounts.discount)) as revenue").joins(:bulk_discounts, :discount_invoice_items).where("invoice_items.quantity >= bulk_discounts.quantity_threshold").group(:id)
+    invoice_items.joins(:bulk_discounts, :discount_invoice_items).where("invoice_items.quantity >= bulk_discounts.quantity_threshold").sum("invoice_items.quantity * invoice_items.unit_price * (1 - bulk_discounts.discount)").to_i
+
+    #@invoice2.discount_revenue.first.revenue.to_i
 
   end
 

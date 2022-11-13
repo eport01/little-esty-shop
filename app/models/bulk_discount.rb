@@ -6,7 +6,5 @@ class BulkDiscount < ApplicationRecord
   validates :discount, numericality: true  
   validates :quantity_threshold, numericality: true  
 
-  def discount_conversion
-    
-  end
+
 end
