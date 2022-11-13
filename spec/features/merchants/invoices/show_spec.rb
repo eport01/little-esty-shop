@@ -126,7 +126,10 @@ RSpec.describe "Merchant Invoice Show" do
         expect(page).to have_link("Discount Show Page for #{@item3.name}")
         expect(page).to have_link("Discount Show Page for #{@item4.name}")
 
+        click_link "Discount Show Page for #{@item3.name}"
 
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+        
       end
     end
   end

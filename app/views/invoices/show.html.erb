@@ -17,7 +17,7 @@
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
   <p><strong>Discount Applied: </strong><% invoice_item.discount_invoice_items.each do |discount_item| %>
     <%= (discount_item.bulk_discount.discount) *100%>%</p>
-    <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount_item.id}", method: :get %></h3></ul>
+    <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount_item.bulk_discount.id}", method: :get %></h3></ul>
 
   <%end %>
 
