@@ -28,6 +28,8 @@ RSpec.describe 'merchant bulk discounts index page' do
     @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
     @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+  
+  
   end 
 
   describe 'as a merchant when i visit my merchant dashboard' do 
@@ -42,11 +44,11 @@ RSpec.describe 'merchant bulk discounts index page' do
     it 'i see all of my bulk discounts including percentage and quantity thresholds, each link goes to discount show page' do 
       visit "/merchants/#{@merchant1.id}/dashboard"
       click_link "My Discounts"
-      expect(page).to have_content("Percentage Discount: 20%")
+      expect(page).to have_content("Percentage Discount: 20.0%")
       expect(page).to have_content("Merchant must purchase at least 10 items to use discount.")
-      expect(page).to have_content("Percentage Discount: 10%")
+      expect(page).to have_content("Percentage Discount: 10.0%")
       expect(page).to have_content("Merchant must purchase at least 5 items to use discount.")
-      expect(page).to_not have_content("Percentage Discount: 15%")
+      expect(page).to_not have_content("Percentage Discount: 15.0%")
       expect(page).to_not have_content("Merchant must purchase at least 15 items to use discount.")
     end
   end
@@ -62,28 +64,28 @@ RSpec.describe 'merchant bulk discounts index page' do
       click_button "Submit"
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
    
-      expect(page).to have_content("Percentage Discount: 20%")
+      expect(page).to have_content("Percentage Discount: 20.0%")
       expect(page).to have_content("Merchant must purchase at least 10 items to use discount.")
-      expect(page).to have_content("Percentage Discount: 30%")
+      expect(page).to have_content("Percentage Discount: 30.0%")
       expect(page).to have_content("Merchant must purchase at least 50 items to use discount.")
-      expect(page).to_not have_content("Percentage Discount: 15%")
+      expect(page).to_not have_content("Percentage Discount: 15.0%")
       expect(page).to_not have_content("Merchant must purchase at least 15 items to use discount.")
     end
 
     it 'i can delete a discount and it takes me back to index page and discount is deleted' do 
       visit merchant_bulk_discounts_path(@merchant1)
-      expect(page).to have_content("Percentage Discount: 20%")
+      expect(page).to have_content("Percentage Discount: 20.0%")
       expect(page).to have_content("Merchant must purchase at least 10 items to use discount.")
-      expect(page).to have_content("Percentage Discount: 10%")
+      expect(page).to have_content("Percentage Discount: 10.0%")
       expect(page).to have_content("Merchant must purchase at least 5 items to use discount.")
 
       within "#discount-list-#{@discount1.id}" do 
         click_button "Delete Discount"
         expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
       end
-      expect(page).to_not have_content("Percentage Discount: 20%")
+      expect(page).to_not have_content("Percentage Discount: 20.0%")
       expect(page).to_not have_content("Merchant must purchase at least 10 items to use discount.")
-      expect(page).to have_content("Percentage Discount: 10%")
+      expect(page).to have_content("Percentage Discount: 10.0%")
       expect(page).to have_content("Merchant must purchase at least 5 items to use discount.")
 
     end
@@ -96,5 +98,7 @@ RSpec.describe 'merchant bulk discounts index page' do
 
 
   end
+
+  
 
 end

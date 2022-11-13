@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_11_211335) do
+ActiveRecord::Schema.define(version: 2022_11_13_042354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bulk_discounts", force: :cascade do |t|
-    t.integer "discount"
+    t.decimal "discount", precision: 5, scale: 2
     t.integer "quantity_threshold"
     t.bigint "merchant_id"
     t.datetime "created_at", null: false
@@ -31,13 +31,13 @@ ActiveRecord::Schema.define(version: 2022_11_11_211335) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "discount_items", force: :cascade do |t|
-    t.bigint "item_id"
+  create_table "discount_invoice_items", force: :cascade do |t|
+    t.bigint "invoice_item_id"
     t.bigint "bulk_discount_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bulk_discount_id"], name: "index_discount_items_on_bulk_discount_id"
-    t.index ["item_id"], name: "index_discount_items_on_item_id"
+    t.index ["bulk_discount_id"], name: "index_discount_invoice_items_on_bulk_discount_id"
+    t.index ["invoice_item_id"], name: "index_discount_invoice_items_on_invoice_item_id"
   end
 
   create_table "invoice_items", force: :cascade do |t|
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 2022_11_11_211335) do
   end
 
   add_foreign_key "bulk_discounts", "merchants"
-  add_foreign_key "discount_items", "bulk_discounts"
-  add_foreign_key "discount_items", "items"
+  add_foreign_key "discount_invoice_items", "bulk_discounts"
+  add_foreign_key "discount_invoice_items", "invoice_items"
   add_foreign_key "invoice_items", "invoices"
   add_foreign_key "invoice_items", "items"
   add_foreign_key "invoices", "customers"
