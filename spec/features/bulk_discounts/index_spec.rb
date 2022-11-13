@@ -28,6 +28,8 @@ RSpec.describe 'merchant bulk discounts index page' do
     @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
     @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+  
+  
   end 
 
   describe 'as a merchant when i visit my merchant dashboard' do 
@@ -96,5 +98,7 @@ RSpec.describe 'merchant bulk discounts index page' do
 
 
   end
+
+  
 
 end
