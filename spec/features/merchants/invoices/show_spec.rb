@@ -20,13 +20,16 @@ RSpec.describe "Merchant Invoice Show" do
     @invoice_item1 = InvoiceItem.create!(quantity: 1, unit_price: 5000, status: 0, item_id: @item1.id, invoice_id: @invoice1.id)
     @invoice_item2 =InvoiceItem.create!(quantity: 2, unit_price: 5000, status: 1, item_id: @item2.id, invoice_id: @invoice1.id)
     @invoice_item3 = InvoiceItem.create!(quantity: 54, unit_price: 8000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
-
-    @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
-    @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+    @invoice_item4 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
+    @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
+    
+    @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
+    @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
 
     DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-
+    DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
+    DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
   end
 
   describe 'US-15: Merchant Invoice Show Page'do 
@@ -110,7 +113,9 @@ RSpec.describe "Merchant Invoice Show" do
 
     describe 'total revenue and discounted revenue' do 
       it 'i see total revenue and discounted revenue as separate' do 
-        require 'pry'; binding.pry
+        visit merchant_invoice_path(@merchant1, @invoice3)
+        expect(page).to have_content("Total Discounted Revenue: 32000")
+
       end
     end
   end
