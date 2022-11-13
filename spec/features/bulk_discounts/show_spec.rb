@@ -54,11 +54,6 @@ RSpec.describe 'merchant bulk discount show page' do
       expect(page).to have_field('Bulk Discount Percentage', with:"#{@discount2.discount}")
       expect(page).to have_field('Quantity Threshold', with:"#{@discount2.quantity_threshold}")
     end
-
-    it 'lists items that this discount is used on' do 
-      visit merchant_bulk_discount_path(@merchant1, @discount2)
-
-    end
   end
 
   
@@ -81,7 +76,7 @@ RSpec.describe 'merchant bulk discount show page' do
     
     @invoice_item1 = InvoiceItem.create!(quantity: 1, unit_price: 5000, status: 0, item_id: @item1.id, invoice_id: @invoice1.id)
     @invoice_item2 =InvoiceItem.create!(quantity: 2, unit_price: 5000, status: 1, item_id: @item2.id, invoice_id: @invoice1.id)
-    @invoice_item3 = InvoiceItem.create!(quantity: 54, unit_price: 8000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
+    @invoice_item3 = InvoiceItem.create!(quantity: 54, unit_price: 8000, status: 2, item_id: @item2.id, invoice_id: @invoice2.id)
     @invoice_item4 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
     @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item4.id, invoice_id: @invoice3.id)
     @invoice_item6 = InvoiceItem.create!(quantity: 1, unit_price: 100, status: 2, item_id: @item1.id, invoice_id: @invoice3.id)
@@ -94,6 +89,11 @@ RSpec.describe 'merchant bulk discount show page' do
     DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
     DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
   end
+
+  # it 'lists items that this discount is used on' do 
+  #   visit merchant_bulk_discount_path(@merchant1, @discount1)
+  #   save_and_open_page
+  # end
 
 
 end
