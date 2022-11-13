@@ -16,8 +16,11 @@ class Invoice < ApplicationRecord
  
 
   def discount_revenue #returns discount but need to add transaction table data
-    invoice_items.joins(:bulk_discounts, :discount_invoice_items).where("invoice_items.quantity >= bulk_discounts.quantity_threshold").sum("invoice_items.quantity * invoice_items.unit_price * (1 - bulk_discounts.discount)").to_i
-    # @invoice3.bulk_discounts.first.discount
+    invoice_items.joins(:bulk_discounts, :discount_invoice_items, invoice: :transactions)
+    .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
+    .where('transactions.result = 0')
+    .sum("invoice_items.quantity * invoice_items.unit_price * (1 - bulk_discounts.discount)")
+    .to_i
   end
 
   def self.unshipped_items

@@ -32,6 +32,13 @@ RSpec.describe "Merchant Invoice Show" do
     DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
     DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
     DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
+  
+    
+    @invoice1.transactions.create!(result: 0)
+    @invoice2.transactions.create!(result: 0)
+    @invoice3.transactions.create!(result: 0)
+  
+  
   end
 
   describe 'US-15: Merchant Invoice Show Page'do 
@@ -127,7 +134,6 @@ RSpec.describe "Merchant Invoice Show" do
         expect(page).to have_link("Discount Show Page for #{@item3.name}")
         expect(page).to have_link("Discount Show Page for #{@item4.name}")
         expect(page).to_not have_link("Discount Show Page for #{@item1.name}")
-
 
         click_link "Discount Show Page for #{@item3.name}"
 
