@@ -21,6 +21,11 @@ RSpec.describe Invoice do
     @invoice_item2 =InvoiceItem.create!(quantity: 2, unit_price: 5000, status: 1, item_id: @item2.id, invoice_id: @invoice1.id)
     @invoice_item3 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
 
+    @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
+    @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+
+    DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
   end
   describe 'relationships' do
     it { should belong_to :customer }
@@ -37,5 +42,11 @@ RSpec.describe Invoice do
     expect(@invoice1.total_revenue).to eq(15000.00) 
     expect(@invoice2.total_revenue).to eq(20000.00) 
 
+  end
+
+  it 'can calculate total discounted revenue of an invoice' do 
+    require 'pry'; binding.pry
+
+    expect(@invoice2.discount_revenue).to eq(1600.00) 
   end
 end

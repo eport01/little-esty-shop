@@ -5,4 +5,8 @@ class BulkDiscount < ApplicationRecord
   has_many :invoice_items, through: :discount_invoice_items
   validates :discount, numericality: true  
   validates :quantity_threshold, numericality: true  
+
+  def discount_conversion
+    
+  end
 end
