@@ -124,7 +124,11 @@ RSpec.describe 'Admin Invoice Show Page' do
       visit admin_invoice_path(@invoice3)
       expect(page).to have_content("Total Revenue: 40100")
       expect(page).to have_content("Total Discounted Revenue: 32000")
-
+      expect(page).to_not have_content("Total Revenue: 432000")
+      visit admin_invoice_path(@invoice2)
+      expect(page).to have_content("Total Revenue: 432000")
+      expect(page).to_not have_content("Total Revenue: 40100")
+      expect(page).to_not have_content("Total Discounted Revenue: 32000")
     end
   end
 end
