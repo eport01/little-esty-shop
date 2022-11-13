@@ -15,6 +15,11 @@
 <% @invoice.invoice_items.each do |invoice_item| %>
   <div id="invoice_item-<%= invoice_item.id %>">
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
+  <p><strong>Discount Applied: </strong><% invoice_item.discount_invoice_items.each do |discount_item| %>
+  <%= (discount_item.bulk_discount.discount) *100%>%</p>
+  <%end %>
+
+
 
   <p><strong>Unit Price: </strong><%= invoice_item.unit_price %></p>
   <p><strong>Quantity: </strong><%= invoice_item.quantity %></p>

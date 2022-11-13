@@ -12,6 +12,7 @@ RSpec.describe "Merchant Invoice Show" do
     @item1 = @merchant1.items.create!(name: "Funny Brick of Powder", description: "White Powder with Gasoline Smell", unit_price: 5000)
     @item2 = @merchant1.items.create!(name: "T-Rex", description: "Skull of a Dinosaur", unit_price: 100000)
     @item3 = @merchant2.items.create!(name: "UFO Board", description: "Out of this world MotherBoard", unit_price: 400)
+    @item4 = @merchant2.items.create!(name: "Alarm Clock", description: "Wakes you up", unit_price: 400)
 
     @invoice1 = Invoice.create!(status: 1, customer_id: @customer2.id, created_at: "2022-11-01 11:00:00 UTC")
     @invoice2 = Invoice.create!(status: 1, customer_id: @customer1.id, created_at: "2022-11-01 11:00:00 UTC")
@@ -21,7 +22,7 @@ RSpec.describe "Merchant Invoice Show" do
     @invoice_item2 =InvoiceItem.create!(quantity: 2, unit_price: 5000, status: 1, item_id: @item2.id, invoice_id: @invoice1.id)
     @invoice_item3 = InvoiceItem.create!(quantity: 54, unit_price: 8000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
     @invoice_item4 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
-    @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
+    @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item4.id, invoice_id: @invoice3.id)
     
     @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
@@ -116,6 +117,14 @@ RSpec.describe "Merchant Invoice Show" do
         visit merchant_invoice_path(@merchant1, @invoice3)
         expect(page).to have_content("Total Revenue: 40000")
         expect(page).to have_content("Total Discounted Revenue: 32000")
+      end
+
+      it 'next to each invoice i see a link to show page for the bulk discount that was applied' do 
+        visit merchant_invoice_path(@merchant1, @invoice3)
+        # require 'pry'; binding.pry
+        save_and_open_page
+        expect(page).to have_content("Discount Applied: 20.0%")
+
       end
     end
   end

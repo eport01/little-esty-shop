@@ -4,4 +4,6 @@ class InvoiceItem < ApplicationRecord
   belongs_to :item 
   has_many :discount_invoice_items
   has_many :bulk_discounts, through: :discount_invoice_items 
+
+
 end
