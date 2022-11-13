@@ -51,7 +51,6 @@ RSpec.describe Invoice do
   end
 
   it 'can calculate total discounted revenue of an invoice' do 
-    require 'pry'; binding.pry
     expect(@invoice3.total_revenue).to eq(40000) 
     expect(@invoice2.total_revenue).to eq(20000.00) 
 
