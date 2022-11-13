@@ -114,8 +114,8 @@ RSpec.describe "Merchant Invoice Show" do
     describe 'total revenue and discounted revenue' do 
       it 'i see total revenue and discounted revenue as separate' do 
         visit merchant_invoice_path(@merchant1, @invoice3)
+        expect(page).to have_content("Total Revenue: 40000")
         expect(page).to have_content("Total Discounted Revenue: 32000")
-
       end
     end
   end
