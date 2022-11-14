@@ -26,12 +26,12 @@ RSpec.describe Invoice do
 
     @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 1)
 
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
-
+    # DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
+    # DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
+    # DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
+    # require 'pry'; binding.pry
   end
   describe 'relationships' do
     it { should belong_to :customer }
@@ -53,7 +53,7 @@ RSpec.describe Invoice do
   it 'can calculate total discounted revenue of an invoice' do 
     expect(@invoice3.total_revenue).to eq(40000) 
     expect(@invoice2.total_revenue).to eq(20000.00) 
-# require 'pry'; binding.pry
+require 'pry'; binding.pry
     expect(@invoice2.discount_revenue).to eq(16000) 
     expect(@invoice3.discount_revenue).to eq(32000)
   end

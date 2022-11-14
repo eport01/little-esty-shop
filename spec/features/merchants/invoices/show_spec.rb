@@ -29,9 +29,9 @@ RSpec.describe "Merchant Invoice Show" do
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
     @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
 
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
+    # DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
+    # DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
+    # DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
   
     
     @invoice1.transactions.create!(result: 0)
