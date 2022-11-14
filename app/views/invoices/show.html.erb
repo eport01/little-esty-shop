@@ -17,10 +17,7 @@
 <% @invoice.invoice_items.each do |invoice_item| %>
   <div id="invoice_item-<%= invoice_item.id %>">
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
-
-
-
-
+  <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.best_discount.id}", method: :get%>
 
 
   <p><strong>Unit Price: </strong><%= invoice_item.unit_price %></p>
