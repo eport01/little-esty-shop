@@ -85,15 +85,9 @@ RSpec.describe 'merchant bulk discount show page' do
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
     @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
 
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
+
   end
 
-  # it 'lists items that this discount is used on' do 
-  #   visit merchant_bulk_discount_path(@merchant1, @discount1)
-  #   save_and_open_page
-  # end
 
 
 end
