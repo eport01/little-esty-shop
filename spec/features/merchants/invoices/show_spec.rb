@@ -72,7 +72,7 @@ RSpec.describe "Merchant Invoice Show" do
         expect(page).to have_content(@invoice_item2.status)
         expect(page).to_not have_content(@item3.name)
         expect(page).to_not have_content(@invoice_item3.unit_price)
-        expect(page).to_not have_content(@invoice_item3.quantity)
+        expect(page).to_not have_content("Quantity: #{@invoice_item3.quantity}")
 
       end
     end
