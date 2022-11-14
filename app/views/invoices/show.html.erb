@@ -7,25 +7,27 @@
 <p><strong>Created at: </strong><%= @invoice.created_at.strftime('%A, %B %d, %Y')%> </p>
 <p><strong>Total Revenue: </strong><%= @invoice.total_revenue %></p>
 <p><strong>Total Discounted Revenue: </strong><%= @invoice.discount_revenue %></p>
+<p><strong>Total Revenue After Discounts: </strong><%= @invoice.after_discounts %></p>
 
 <br>
 <br>
 
 <p><h4>Invoice Items Ordered: </h4></p>
+
 <% @invoice.invoice_items.each do |invoice_item| %>
   <div id="invoice_item-<%= invoice_item.id %>">
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
-  <p><strong>Discount Applied: </strong><% invoice_item.discount_invoice_items.each do |discount_item| %>
-    <%= (discount_item.bulk_discount.discount) *100%>%</p>
-    <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount_item.bulk_discount.id}", method: :get %></h3></ul>
+  <%if invoice_item.best_discount != nil%>
+    <p>Discount Applied: <%= invoice_item.best_discount.discount * 100%>%</p>
 
-  <%end %>
-
-
+    <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.best_discount.id}", method: :get%>
+  <%end%>
 
   <p><strong>Unit Price: </strong><%= invoice_item.unit_price %></p>
   <p><strong>Quantity: </strong><%= invoice_item.quantity %></p>
   <p><strong>Status: </strong><%= invoice_item.status %></p>
+  </div>
+  <div id = "invoice_item_status-<%=invoice_item.id%>">
   <%= form_with url:invoice_item_path(invoice_item.id), method: :patch, local: true do |f| %>
     <%= f.label :status, "pending" %>
     <%= f.radio_button :status, "pending", :checked => invoice_item.status == "pending" %>
@@ -39,6 +41,8 @@
   <br>
   <% end %>
   </div>
+
+
 <% end %>
 <br>
 

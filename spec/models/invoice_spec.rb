@@ -26,11 +26,8 @@ RSpec.describe Invoice do
 
     @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 1)
 
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
 
   end
   describe 'relationships' do
@@ -43,6 +40,10 @@ RSpec.describe Invoice do
 
   describe "model methods"
 
+  it 'find unshipped_items' do 
+    expect(Invoice.unshipped_items).to eq([@invoice1, @invoice2, @invoice3])
+  end
+
   it 'can calculate total revenue of an invoice' do 
 
     expect(@invoice1.total_revenue).to eq(15000.00) 
@@ -53,8 +54,11 @@ RSpec.describe Invoice do
   it 'can calculate total discounted revenue of an invoice' do 
     expect(@invoice3.total_revenue).to eq(40000) 
     expect(@invoice2.total_revenue).to eq(20000.00) 
-# require 'pry'; binding.pry
-    expect(@invoice2.discount_revenue).to eq(16000) 
-    expect(@invoice3.discount_revenue).to eq(32000)
+    expect(@invoice2.discount_revenue).to eq(3000) 
+    expect(@invoice3.discount_revenue).to eq(6000)
+
+    expect(@invoice2.after_discounts).to eq(17000) 
+    expect(@invoice3.after_discounts).to eq(34000) 
+
   end
 end
