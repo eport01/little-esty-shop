@@ -108,7 +108,7 @@ RSpec.describe "Merchant Invoice Show" do
       it 'when I click the update item status button I am taken back to merchant invoice show page
           and status has been updated' do 
         visit merchant_invoice_path(@merchant1, @invoice1)
-        within "#invoice_item-#{@invoice_item1.id}" do
+        within "#invoice_item_status-#{@invoice_item1.id}" do
         first(:radio_button, 'status').click 
           expect(page).to have_button("Update Item Status")
           click_button('Update Item Status')
@@ -116,6 +116,7 @@ RSpec.describe "Merchant Invoice Show" do
         end 
       end
     end
+  end
 
     before :each do 
       @merchant1 = Merchant.create!(name: "Kevin's Illegal goods")
@@ -169,5 +170,4 @@ RSpec.describe "Merchant Invoice Show" do
 
       end
     end
-  end
 end

@@ -17,15 +17,17 @@
 <% @invoice.invoice_items.each do |invoice_item| %>
   <div id="invoice_item-<%= invoice_item.id %>">
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
-  <p><strong>Discount Applied: </strong><%= invoice_item.best_discount.discount * 100%>%</p>
+  <%if invoice_item.best_discount != nil%>
+    <p>Discount Applied: <%= invoice_item.best_discount.discount * 100%>%</p>
 
-  <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.best_discount.id}", method: :get%>
-
+    <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.best_discount.id}", method: :get%>
+  <%end%>
 
   <p><strong>Unit Price: </strong><%= invoice_item.unit_price %></p>
   <p><strong>Quantity: </strong><%= invoice_item.quantity %></p>
   <p><strong>Status: </strong><%= invoice_item.status %></p>
-
+  </div>
+  <div id = "invoice_item_status-<%=invoice_item.id%>">
   <%= form_with url:invoice_item_path(invoice_item.id), method: :patch, local: true do |f| %>
     <%= f.label :status, "pending" %>
     <%= f.radio_button :status, "pending", :checked => invoice_item.status == "pending" %>

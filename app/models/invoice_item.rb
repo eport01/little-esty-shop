@@ -10,7 +10,7 @@ class InvoiceItem < ApplicationRecord
  def best_discount #finds best discount for invoice_item
    bulk_discounts.joins(:invoice_items)
    .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
-   .order('bulk_discounts.discount desc').first.discount
+   .order('bulk_discounts.discount desc').first
  end
 
 end
