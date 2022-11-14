@@ -89,10 +89,9 @@ RSpec.describe 'Admin Invoice Show Page' do
     @customer2 = Customer.create!(first_name: "Sergio", last_name: "Azcona")
     @customer3 = Customer.create!(first_name: "Emily", last_name: "Port")
 
-    @item1 = @merchant1.items.create!(name: "Funny Brick of Powder", description: "White Powder with Gasoline Smell", unit_price: 5000)
-    @item2 = @merchant1.items.create!(name: "T-Rex", description: "Skull of a Dinosaur", unit_price: 100000)
+    @item1 = @merchant2.items.create!(name: "Funny Brick of Powder", description: "White Powder with Gasoline Smell", unit_price: 5000)
+    @item2 = @merchant2.items.create!(name: "T-Rex", description: "Skull of a Dinosaur", unit_price: 100000)
     @item3 = @merchant2.items.create!(name: "UFO Board", description: "Out of this world MotherBoard", unit_price: 400)
-    @item4 = @merchant2.items.create!(name: "Alarm Clock", description: "Wakes you up", unit_price: 400)
 
     @invoice1 = Invoice.create!(status: 1, customer_id: @customer2.id, created_at: "2022-11-01 11:00:00 UTC")
     @invoice2 = Invoice.create!(status: 1, customer_id: @customer1.id, created_at: "2022-11-01 11:00:00 UTC")
@@ -100,35 +99,30 @@ RSpec.describe 'Admin Invoice Show Page' do
     
     @invoice_item1 = InvoiceItem.create!(quantity: 1, unit_price: 5000, status: 0, item_id: @item1.id, invoice_id: @invoice1.id)
     @invoice_item2 =InvoiceItem.create!(quantity: 2, unit_price: 5000, status: 1, item_id: @item2.id, invoice_id: @invoice1.id)
-    @invoice_item3 = InvoiceItem.create!(quantity: 54, unit_price: 8000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
+    @invoice_item3 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
     @invoice_item4 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
-    @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item4.id, invoice_id: @invoice3.id)
-    @invoice_item6 = InvoiceItem.create!(quantity: 1, unit_price: 100, status: 2, item_id: @item1.id, invoice_id: @invoice3.id)
+    # @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
+
 
     @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
-
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
-    DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
-  
-    
-    @invoice1.transactions.create!(result: 0)
-    @invoice2.transactions.create!(result: 0)
-    @invoice3.transactions.create!(result: 0)
-  end
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 1)
+  end 
 
   describe 'discounted revenue on admin invoice show page' do 
     it 'i see total revenue and total discounted revenue from this invoice' do 
       visit admin_invoice_path(@invoice3)
-      expect(page).to have_content("Total Revenue: 40100")
-      expect(page).to have_content("Total Discounted Revenue: 32000")
+      expect(page).to have_content("Total Revenue: 20000")
+      expect(page).to have_content("Total Discounted Revenue: 3000")
+      expect(page).to have_content("Total Revenue After Discounts: 17000")
+
       expect(page).to_not have_content("Total Revenue: 432000")
-      visit admin_invoice_path(@invoice2)
-      expect(page).to have_content("Total Revenue: 432000")
-      expect(page).to_not have_content("Total Revenue: 40100")
-      expect(page).to_not have_content("Total Discounted Revenue: 32000")
+      visit admin_invoice_path(@invoice1)
+      expect(page).to have_content("Total Revenue: 15000")
+      expect(page).to_not have_content("Total Revenue: 20000")
+      expect(page).to have_content("Total Discounted Revenue: 2250")
+      expect(page).to have_content("Total Revenue After Discounts: 12750")
+
     end
   end
 end
