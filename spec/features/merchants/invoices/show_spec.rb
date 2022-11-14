@@ -137,7 +137,7 @@ RSpec.describe "Merchant Invoice Show" do
       @invoice_item2 =InvoiceItem.create!(quantity: 2, unit_price: 5000, status: 1, item_id: @item2.id, invoice_id: @invoice1.id)
       @invoice_item3 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice2.id)
       @invoice_item4 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
-      @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
+      # @invoice_item5 = InvoiceItem.create!(quantity: 10, unit_price: 2000, status: 2, item_id: @item3.id, invoice_id: @invoice3.id)
   
   
       @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
@@ -148,24 +148,24 @@ RSpec.describe "Merchant Invoice Show" do
     describe 'total revenue and discounted revenue' do 
       it 'i see total revenue and discounted revenue as separate' do 
         visit merchant_invoice_path(@merchant1, @invoice3)
-        expect(page).to have_content("Total Revenue: 40000")
-        expect(page).to have_content("Total Discounted Revenue: 6000")
-        expect(page).to have_content("Total Revenue After Discounts: 34000")
+        expect(page).to have_content("Total Revenue: 20000")
+        expect(page).to have_content("Total Discounted Revenue: 3000")
+        expect(page).to have_content("Total Revenue After Discounts: 17000")
 
       end
 
       it 'next to each invoice i see a link to show page for the bulk discount that was applied' do 
         visit merchant_invoice_path(@merchant1, @invoice3)
         # require 'pry'; binding.pry
-        expect(page).to have_content("Discount Applied: 20.0%")
-        expect(page).to have_link("Discount Show Page for #{@item3.name}")
-        expect(page).to have_link("Discount Show Page for #{@item4.name}")
-        expect(page).to_not have_link("Discount Show Page for #{@item1.name}")
+        within "#invoice_item-#{@invoice_item4.id}" do 
+          expect(page).to have_content("Discount Applied: 15.0%")
+          expect(page).to have_link("Discount Show Page for #{@item3.name}")
+          expect(page).to_not have_link("Discount Show Page for #{@item4.name}")
+          expect(page).to_not have_link("Discount Show Page for #{@item1.name}" )
+          click_link "Discount Show Page for #{@item3.name}"
 
-        click_link "Discount Show Page for #{@item3.name}"
-
-        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
-
+          expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @invoice_item4.best_discount))
+        end
 
       end
     end
