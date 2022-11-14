@@ -28,10 +28,7 @@ RSpec.describe Invoice do
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
     @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 1)
 
-    # DiscountInvoiceItem.create!(invoice_item: @invoice_item3, bulk_discount: @discount1)
-    # DiscountInvoiceItem.create!(invoice_item: @invoice_item4, bulk_discount: @discount1)
-    # DiscountInvoiceItem.create!(invoice_item: @invoice_item5, bulk_discount: @discount1)
-    # require 'pry'; binding.pry
+
   end
   describe 'relationships' do
     it { should belong_to :customer }
@@ -42,6 +39,10 @@ RSpec.describe Invoice do
   end 
 
   describe "model methods"
+
+  it 'find unshipped_items' do 
+    expect(Invoice.unshipped_items).to eq([@invoice1, @invoice2, @invoice3])
+  end
 
   it 'can calculate total revenue of an invoice' do 
 
