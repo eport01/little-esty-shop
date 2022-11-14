@@ -39,7 +39,7 @@ RSpec.describe InvoiceItem do
 
   describe 'best discount method' do 
     it 'returns the best discount for an invoice item' do 
-      expect(@invoice_item3.best_discount).to eq(0.15)
+      expect(@invoice_item3.best_discount.discount).to eq(0.15)
     end
   end
 end

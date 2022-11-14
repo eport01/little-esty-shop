@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe BulkDiscount do 
   describe 'relationships' do 
     it {should belong_to :merchant }
-    it {should have_many :discount_invoice_items}
-    it {should have_many(:invoice_items).through(:discount_invoice_items)}
+    it {should have_many(:invoice_items).through(:merchant)}
   end
 
   describe 'validations' do 
