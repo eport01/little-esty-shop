@@ -17,13 +17,10 @@
 <% @invoice.invoice_items.each do |invoice_item| %>
   <div id="invoice_item-<%= invoice_item.id %>">
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
-  <%invoice_item.bulk_discounts.each do |bulk_discount| %>
-    <% if invoice_item.quantity >= bulk_discount.quantity_threshold%>
-  
-    <p>Discount Applied: <%= invoice_item.best_discount.discount * 100%>%</p>
+  <% if invoice_item.quantity >= invoice_item.best_discount.quantity_threshold %> <!-- & invoice_item.best_discount.discount == bulk_discount.discount !--> 
 
+    <p>Discount Applied: <%= invoice_item.best_discount.discount * 100%>%</p>
     <%=link_to "Discount Show Page for #{invoice_item.item.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.best_discount.id}", method: :get%>
-    <%end%>
   <%end%>
 
   <p><strong>Unit Price: </strong><%= invoice_item.unit_price %></p>

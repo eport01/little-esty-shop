@@ -3,14 +3,19 @@ class InvoiceItem < ApplicationRecord
   belongs_to :invoice 
   belongs_to :item 
   has_one :merchant, through: :item 
-  # has_many :discount_invoice_items
-  # has_many :bulk_discounts, through: :discount_invoice_items 
   has_many :bulk_discounts, through: :merchant
    
  def best_discount #finds best discount for invoice_item
-   bulk_discounts.joins(:invoice_items)
-   .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
-   .order('bulk_discounts.discount desc').first
+
+  bulk_discounts
+  .where("bulk_discounts.quantity_threshold <= ?",  quantity)
+  .order('bulk_discounts.discount desc').first 
+
+
+  
  end
+
+
+
 
 end

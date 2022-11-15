@@ -11,7 +11,7 @@ RSpec.describe InvoiceItem do
 
   before :each do 
     @merchant1 = Merchant.create!(name: "Kevin's Illegal goods")
-    @merchant2 = Merchant.create!(name: "Denver PC parts")
+    # @merchant2 = Merchant.create!(name: "Denver PC parts")
 
     @customer1 = Customer.create!(first_name: "Sean", last_name: "Culliton")
     @customer2 = Customer.create!(first_name: "Sergio", last_name: "Azcona")
@@ -19,7 +19,7 @@ RSpec.describe InvoiceItem do
 
     @item1 = @merchant1.items.create!(name: "Funny Brick of Powder", description: "White Powder with Gasoline Smell", unit_price: 5000)
     @item2 = @merchant1.items.create!(name: "T-Rex", description: "Skull of a Dinosaur", unit_price: 100000)
-    @item3 = @merchant2.items.create!(name: "UFO Board", description: "Out of this world MotherBoard", unit_price: 400)
+    @item3 = @merchant1.items.create!(name: "UFO Board", description: "Out of this world MotherBoard", unit_price: 400)
 
     @invoice1 = Invoice.create!(status: 1, customer_id: @customer2.id, created_at: "2022-11-01 11:00:00 UTC")
     @invoice2 = Invoice.create!(status: 1, customer_id: @customer1.id, created_at: "2022-11-01 11:00:00 UTC")
@@ -34,12 +34,13 @@ RSpec.describe InvoiceItem do
 
     @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
     @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 1)
+    @discount3 = @merchant1.bulk_discounts.create!(discount: 0.15, quantity_threshold: 1)
+
   end 
 
   describe 'best discount method' do 
     it 'returns the best discount for an invoice item' do 
-      expect(@invoice_item3.best_discount.discount).to eq(0.15)
+      expect(@invoice_item3.best_discount.discount).to eq(0.20)
     end
   end
 end

@@ -1,13 +1,9 @@
 <h2>Create a New Bulk Discount</h2>
-<p>**Please enter percentage as a decimal.**</p> 
-<p>**For example, if you want 30%, enter 0.30.**</p>
-<p>**If you want 20%, type in 0.20.**</p>
-<%= form_with url: merchant_bulk_discounts_path(@merchant), method: :post, local: true do |f|%>
-  <ul><%= f.label :discount, "Bulk Discount Percentage (as a decimal)" %>
-  <%= f.text_field :discount %></ul>
+<%= render partial: 'form', locals: {
+                                      path: merchant_bulk_discounts_path(@merchant),
+                                      method: :post,
+                                      button_text: "Submit",
+                                      discount: '',
+                                      quantity_threshold: '',
+                                      } %>
 
-  <ul><%= f.label :quantity_threshold, "Quantity Threshold" %>
-  <%= f.text_field :quantity_threshold %></ul>
-
-  <%= f.submit "Submit"%>
-<%end%>
