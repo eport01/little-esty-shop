@@ -10,4 +10,16 @@
 </div>
 <%end%>
 
+<hr>
+<h3><strong>Upcoming Holidays</strong></h3>
+
+<%holiday = HolidaySearch.new.holiday_info.take(3)%>
+<%holiday.each do |holiday|%>
+  <p><h4><%=holiday.name %></h4></p>
+  <p><strong>Date:</strong> <%=holiday.date %></p>
+
+<%end%>
+
+
+
 
