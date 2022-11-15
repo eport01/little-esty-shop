@@ -1,6 +1,8 @@
 <h1><center>Items for: <%=@merchant.name%></center></h1>
 
 <%=button_to "New Item", "/merchants/#{@merchant.id}/items/new", method: :get %>
+<br><br>
+<%=button_to "Back to #{@merchant.name}'s Dashboard", "/merchants/#{@merchant.id}/dashboard", method: :get %>
 
 <div class="row">
   <style>
