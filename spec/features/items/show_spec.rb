@@ -67,8 +67,8 @@ RSpec.describe 'merchant items show page' do
     end
   end
 
-  describe 'back button to go back to merchant dashboard' do 
-    it 'after clicking button, user can go back to merchant dashboard' do 
+  describe 'back button to go back to items index' do 
+    it 'after clicking button, user can go back to items index' do 
       visit ("/merchants/#{@dk.id}/items/#{@funnypowder.id}")
       click_button "Back To My Items"
       expect(current_path).to eq("/merchants/#{@dk.id}/items")

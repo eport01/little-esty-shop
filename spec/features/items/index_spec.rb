@@ -136,5 +136,13 @@ RSpec.describe 'merchant items index page' do
       expect(page).to have_content("Top Selling Date For Folder was Sunday, February 02, 2020")
       expect(page).to have_content("Top Selling Date For Eraser was Wednesday, November 02, 2022")
     end
+
+    describe 'back button to go back to merchant dashboard' do 
+      it 'after clicking button, user can go back to merchant dashboard' do 
+        visit "/merchants/#{@merchant2.id}/items"
+        click_button "Back to #{@merchant2.name}'s Dashboard"
+        expect(current_path).to eq("/merchants/#{@merchant2.id}/dashboard")
+      end
+    end
   end
 end

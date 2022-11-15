@@ -96,7 +96,17 @@ RSpec.describe 'merchant bulk discounts index page' do
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
     end
 
+    
 
+
+  end
+
+  describe 'back button to go back to merchant dashboard' do 
+    it 'after clicking button, user can go back to merchant dashboard' do 
+      visit merchant_bulk_discounts_path(@merchant1)
+      click_button "Back to #{@merchant1.name}'s Dashboard"
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/dashboard")
+    end
   end
 
   

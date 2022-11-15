@@ -169,5 +169,11 @@ RSpec.describe "Merchant Invoice Show" do
         end
 
       end
+
+      it 'after clicking button, user can go back to merchant dashboard' do 
+        visit merchant_invoice_path(@merchant1, @invoice3)
+        click_button "Back to #{@merchant1.name}'s Dashboard"
+        expect(current_path).to eq("/merchants/#{@merchant1.id}/dashboard")
+      end
     end
 end
