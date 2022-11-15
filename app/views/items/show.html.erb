@@ -11,4 +11,7 @@
 
   <!-- <div style="position:fixed; padding: 1em; top: 0; left: 0;"> -->
     <%= button_to "Update Item", "/merchants/#{@item.merchant.id}/items/#{@item.id}/edit", method: :get %>
+    <br><br>
+  <%= button_to 'Back To My Items', "/merchants/#{@item.merchant.id}/items" %>  
+
   <!-- </div> -->

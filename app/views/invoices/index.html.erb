@@ -4,3 +4,5 @@
 <% @merchant.invoices.uniq.each do |invoice| %></ul>
   <ul>Invoice Number: <%= link_to invoice.id, "/merchants/#{@merchant.id}/invoices/#{invoice.id}" %></ul>
 <% end %>
+
+<%=button_to "Back to #{@merchant.name}'s Dashboard", "/merchants/#{@merchant.id}/dashboard", method: :get %>

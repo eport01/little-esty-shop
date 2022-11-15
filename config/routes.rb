@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   namespace :admin do 
     resources :merchants
     resources :invoices
+    resources :bulk_discounts 
+
   end
   
   # got error: "No route matches [GET] "/admin; thus created this-

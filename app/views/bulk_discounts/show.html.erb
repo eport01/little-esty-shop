@@ -2,3 +2,4 @@
   <ul><h3>Percentage Discount: <%=@bulk_discount.discount*100%>%</h3></ul>
   <ul>Quantity Threshold: <%= @bulk_discount.quantity_threshold%> items to use discount.</ul>
   <%=button_to "Edit Discount", edit_merchant_bulk_discount_path(@merchant, @bulk_discount), method: :get%>
+  <%=button_to "Back to #{@merchant.name}'s Dashboard", "/merchants/#{@merchant.id}/dashboard", method: :get %>

@@ -9,6 +9,8 @@
   <%=button_to "Delete Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{bulk.id}", method: :delete %>
 </div>
 <%end%>
+<br><br><br>
+<%=button_to "Back to #{@merchant.name}'s Dashboard", "/merchants/#{@merchant.id}/dashboard", method: :get %>
 
 <hr>
 <h3><strong>Upcoming Holidays</strong></h3>

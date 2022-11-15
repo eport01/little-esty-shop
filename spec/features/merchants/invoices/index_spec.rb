@@ -62,6 +62,13 @@ RSpec.describe "Merchant Invoice Index" do
         
         expect(current_path).to eq("/merchants/#{@dk.id}/invoices/#{@invoice3.id}")
       end
+
+
+      it 'after clicking button, user can go back to merchant dashboard' do 
+        visit ("/merchants/#{@dk.id}/invoices")
+        click_button "Back to #{@dk.name}'s Dashboard"
+        expect(current_path).to eq("/merchants/#{@dk.id}/dashboard")
+      end
     end
   end
 end

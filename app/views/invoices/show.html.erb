@@ -18,7 +18,7 @@
   <div id="invoice_item-<%= invoice_item.id %>">
   <p><strong>Name: </strong><%= invoice_item.item.name %></p>
   <%invoice_item.bulk_discounts.each do |bulk_discount| %>
-    <% if invoice_item.quantity >= bulk_discount.quantity_threshold%>
+    <% if invoice_item.quantity >= bulk_discount.quantity_threshold && invoice_item.best_discount.discount == bulk_discount.discount%> <!-- & invoice_item.best_discount.discount == bulk_discount.discount !--> 
   
     <p>Discount Applied: <%= invoice_item.best_discount.discount * 100%>%</p>
 
@@ -47,6 +47,7 @@
 
 
 <% end %>
+<%=button_to "Back to #{@merchant.name}'s Dashboard", "/merchants/#{@merchant.id}/dashboard", method: :get %>
 <br>
 
 

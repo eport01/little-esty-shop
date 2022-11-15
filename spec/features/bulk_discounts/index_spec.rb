@@ -25,9 +25,9 @@ RSpec.describe 'merchant bulk discounts index page' do
     @invoice6.transactions.create!(result: 0)
     @invoice7.transactions.create!(result: 0)
     @invoice8.transactions.create!(result: 0)
-    @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
-    @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+    @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
+    @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
   
   
   end 
@@ -66,7 +66,7 @@ RSpec.describe 'merchant bulk discounts index page' do
    
       expect(page).to have_content("Percentage Discount: 20.0%")
       expect(page).to have_content("Merchant must purchase at least 10 items to use discount.")
-      expect(page).to have_content("Percentage Discount: 30.0%")
+      expect(page).to have_content("Percentage Discount: 20.0%")
       expect(page).to have_content("Merchant must purchase at least 50 items to use discount.")
       expect(page).to_not have_content("Percentage Discount: 15.0%")
       expect(page).to_not have_content("Merchant must purchase at least 15 items to use discount.")
@@ -92,11 +92,21 @@ RSpec.describe 'merchant bulk discounts index page' do
 
     it 'each discount includes a link to its show page' do 
       visit merchant_bulk_discounts_path(@merchant1)
-      click_link "Percentage Discount: #{@discount1.discount}"
+      click_link "Percentage Discount: #{@discount1.discount*100}"
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
     end
 
+    
 
+
+  end
+
+  describe 'back button to go back to merchant dashboard' do 
+    it 'after clicking button, user can go back to merchant dashboard' do 
+      visit merchant_bulk_discounts_path(@merchant1)
+      click_button "Back to #{@merchant1.name}'s Dashboard"
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/dashboard")
+    end
   end
 
   

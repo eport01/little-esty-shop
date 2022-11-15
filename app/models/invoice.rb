@@ -19,11 +19,11 @@ class Invoice < ApplicationRecord
   end
 
 
-  def discount_revenue #total amount of discounted revenue, money off 
+  def discount_revenue #total amount of discount, money off 
     from_sql = 
     invoice_items
     .joins(:bulk_discounts)
-    .select('min(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.discount) as revenue')
+    .select('max(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.discount) as revenue')
     .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
     .group(:id).to_sql
 

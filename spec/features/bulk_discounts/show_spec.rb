@@ -54,6 +54,13 @@ RSpec.describe 'merchant bulk discount show page' do
       expect(page).to have_field('Bulk Discount Percentage', with:"#{@discount2.discount}")
       expect(page).to have_field('Quantity Threshold', with:"#{@discount2.quantity_threshold}")
     end
+
+
+    it 'after clicking button, user can go back to merchant dashboard' do 
+      visit merchant_bulk_discount_path(@merchant1, @discount2)
+      click_button "Back to #{@merchant1.name}'s Dashboard"
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/dashboard")
+    end
   end
 
   
