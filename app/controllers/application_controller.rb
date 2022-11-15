@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
   #   PrSearch.create_pr
   # end
 
+  def holiday_info
+    HolidaySearch.holidays 
+  end
+
   def welcome 
     
   end
