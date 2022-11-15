@@ -4,7 +4,7 @@ require './config/application'
 class HolidayService
   
   def holiday_information 
-    get_url("https://date.nager.at/api/v3/PublicHolidays/2022/US")
+    get_url("https://date.nager.at/api/v3/NextPublicHolidays/US")
   end
   def get_url(url)
     response = HTTParty.get(url)
