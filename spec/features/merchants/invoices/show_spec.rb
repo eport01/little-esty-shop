@@ -150,14 +150,13 @@ RSpec.describe "Merchant Invoice Show" do
       it 'i see total revenue and discounted revenue as separate' do 
         visit merchant_invoice_path(@merchant1, @invoice3)
         expect(page).to have_content("Total Revenue: 20000")
-        expect(page).to have_content("Total Discounted Revenue: 3000")
+        expect(page).to have_content("Total Discounts: 3000")
         expect(page).to have_content("Total Revenue After Discounts: 17000")
 
       end
 
       it 'next to each invoice i see a link to show page for the bulk discount that was applied' do 
         visit merchant_invoice_path(@merchant1, @invoice3)
-        # require 'pry'; binding.pry
         within "#invoice_item-#{@invoice_item4.id}" do 
           expect(page).to have_content("Discount Applied: 15.0%")
           expect(page).to have_link("Discount Show Page for #{@item3.name}")

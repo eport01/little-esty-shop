@@ -113,14 +113,14 @@ RSpec.describe 'Admin Invoice Show Page' do
     it 'i see total revenue and total discounted revenue from this invoice' do 
       visit admin_invoice_path(@invoice3)
       expect(page).to have_content("Total Revenue: 20000")
-      expect(page).to have_content("Total Discounted Revenue: 3000")
+      expect(page).to have_content("Total Discounts: 3000")
       expect(page).to have_content("Total Revenue After Discounts: 17000")
 
       expect(page).to_not have_content("Total Revenue: 432000")
       visit admin_invoice_path(@invoice1)
       expect(page).to have_content("Total Revenue: 15000")
       expect(page).to_not have_content("Total Revenue: 20000")
-      expect(page).to have_content("Total Discounted Revenue: 2250")
+      expect(page).to have_content("Total Discounts: 2250")
       expect(page).to have_content("Total Revenue After Discounts: 12750")
 
     end
