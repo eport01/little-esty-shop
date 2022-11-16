@@ -25,9 +25,9 @@ RSpec.describe 'merchant bulk discount edit page' do
     @invoice6.transactions.create!(result: 0)
     @invoice7.transactions.create!(result: 0)
     @invoice8.transactions.create!(result: 0)
-    @discount1 = @merchant1.bulk_discounts.create!(discount: 20, quantity_threshold: 10)
-    @discount2 = @merchant1.bulk_discounts.create!(discount: 10, quantity_threshold: 5)
-    @discount3 = @merchant2.bulk_discounts.create!(discount: 15, quantity_threshold: 15)
+    @discount1 = @merchant1.bulk_discounts.create!(discount: 0.20, quantity_threshold: 10)
+    @discount2 = @merchant1.bulk_discounts.create!(discount: 0.10, quantity_threshold: 5)
+    @discount3 = @merchant2.bulk_discounts.create!(discount: 0.15, quantity_threshold: 15)
   end 
 
   describe 'when a merchant clicks on edit discount button on merchant discount show page' do 
@@ -43,7 +43,7 @@ RSpec.describe 'merchant bulk discount edit page' do
 
       expect(page).to have_field('Bulk Discount Percentage', with:"#{@discount2.discount}")
       expect(page).to have_field('Quantity Threshold', with:"#{@discount2.quantity_threshold}")
-      fill_in('Bulk Discount Percentage', with: 20)
+      fill_in('Bulk Discount Percentage', with: 0.20)
 
       click_button "Submit"
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount2))
