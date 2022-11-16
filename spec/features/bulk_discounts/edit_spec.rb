@@ -59,6 +59,11 @@ RSpec.describe 'merchant bulk discount edit page' do
       fill_in('Bulk Discount Percentage', with: 20)
       click_button "Submit"
       expect(page).to have_content('Please Enter a Valid decimal between 0 and 1')
+      fill_in('Bulk Discount Percentage', with: 0.20)
+      click_button "Submit"
+      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount2))
+      expect(page).to have_content('Discount: 20')
+
 
     end
 
