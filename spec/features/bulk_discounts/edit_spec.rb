@@ -52,6 +52,16 @@ RSpec.describe 'merchant bulk discount edit page' do
       expect(page).to have_button("Edit Discount")
 
     end
+
+    it 'tests for sad path, if a user enters a number that isnt a decimal between 0 and 1' do 
+      visit edit_merchant_bulk_discount_path(@merchant1, @discount2)
+      expect(page).to have_content("Edit Discount Page")
+      fill_in('Bulk Discount Percentage', with: 20)
+      click_button "Submit"
+      expect(page).to have_content('Please Enter a Valid decimal between 0 and 1')
+
+    end
+
   end
 
 end 

@@ -12,8 +12,14 @@ class BulkDiscountsController < ApplicationController
 
   def create 
     @merchant = Merchant.find(params[:merchant_id])
-    @merchant.bulk_discounts.create!(bulk_discount_params)
-    redirect_to merchant_bulk_discounts_path(@merchant)
+    @bulk_discount = @merchant.bulk_discounts.create(bulk_discount_params)
+    if @bulk_discount.valid?
+      @bulk_discount.save 
+      redirect_to merchant_bulk_discounts_path(@merchant)
+    else  
+      flash[:notice] = 'Please Enter a Valid decimal between 0 and 1'
+      render :new 
+    end
   end
 
   def destroy 
@@ -36,8 +42,16 @@ class BulkDiscountsController < ApplicationController
   def update 
     @merchant = Merchant.find(params[:merchant_id]) 
     @bulk_discount = BulkDiscount.find(params[:id])
-    @bulk_discount.update!(bulk_discount_params)
-    redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+
+    @bulk_discount.update(bulk_discount_params)
+    if @bulk_discount.valid?
+      @bulk_discount.save 
+      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+    else
+      flash[:notice] = 'Please Enter a Valid decimal between 0 and 1'
+      render :edit 
+    end
+
   end
 
   private 
