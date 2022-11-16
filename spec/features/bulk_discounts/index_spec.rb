@@ -59,7 +59,7 @@ RSpec.describe 'merchant bulk discounts index page' do
       click_button "Create a New Discount"
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
       expect(page).to have_content("Create a New Bulk Discount")
-      fill_in :discount, with: 30
+      fill_in :discount, with: 0.30
       fill_in :quantity_threshold, with: 50
       click_button "Submit"
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
@@ -70,6 +70,18 @@ RSpec.describe 'merchant bulk discounts index page' do
       expect(page).to have_content("Merchant must purchase at least 50 items to use discount.")
       expect(page).to_not have_content("Percentage Discount: 15.0%")
       expect(page).to_not have_content("Merchant must purchase at least 15 items to use discount.")
+    end
+
+    it 'tests that a new discount has to be a number between 0 and 1' do
+      visit new_merchant_bulk_discount_path(@merchant1)
+      fill_in :discount, with: 30
+      fill_in :quantity_threshold, with: 50
+      click_button "Submit"
+      expect(page).to have_content('Please Enter a Valid decimal between 0 and 1')
+      fill_in('Bulk Discount Percentage', with: 0.30)
+      click_button "Submit"
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
     end
 
     it 'i can delete a discount and it takes me back to index page and discount is deleted' do 
